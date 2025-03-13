@@ -6,10 +6,11 @@ import {
   getUserById,
   updateUserById,
 } from "../controllers/user.controller.js";
+import { authorize, authorizeAdmin } from "../middlewares/auth.middleware.js";
 
 const userRouter = Router();
 
-userRouter.get("/", getAllUsers);
+userRouter.get("/", authorize, authorizeAdmin("admin"), getAllUsers);
 
 userRouter.get("/:id", getUserById);
 
