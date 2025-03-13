@@ -2,15 +2,15 @@ import jwt from "jsonwebtoken";
 import { JWT_SECRET } from "../config/env.js";
 import User from "../models/user.model.js";
 
-const authorize = async (req, res, next) => {
+export const authorize = async (req, res, next) => {
   try {
     let token;
 
     if (
       req.headers.authorization &&
-      req.heads.authorization.startsWith("Bearer")
+      req.headers.authorization.startsWith("Bearer")
     ) {
-      token = req.header.authorization.split(" ")[1];
+      token = req.headers.authorization.split(" ")[1];
 
       if (!token) {
         return res.status(401).json({
@@ -21,7 +21,7 @@ const authorize = async (req, res, next) => {
 
       const decoded = jwt.verify(token, JWT_SECRET);
 
-      const user = await User.findById(decoded.id);
+      const user = await User.findById(decoded.userId);
 
       if (!user) {
         return res.status(401).json({
@@ -41,8 +41,8 @@ const authorize = async (req, res, next) => {
   }
 };
 
-const authorizeAdmin = (...allowedRoles) => {
-  return (res, res, next) => {
+export const authorizeAdmin = (...allowedRoles) => {
+  return (req, res, next) => {
     try {
       const user = req.user;
       const userRole = user.role;
@@ -62,8 +62,6 @@ const authorizeAdmin = (...allowedRoles) => {
     }
   };
 };
-
-module.exports = { authorize, authorizeAdmin };
 
 // In this middleware, we are verifying the token sent in the Authorization header.
 // If the token is valid, we are fetching the user from the database and attaching
