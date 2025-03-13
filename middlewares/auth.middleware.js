@@ -63,7 +63,7 @@ const authorizeAdmin = (...allowedRoles) => {
   };
 };
 
-export default authorize;
+module.exports = { authorize, authorizeAdmin };
 
 // In this middleware, we are verifying the token sent in the Authorization header.
 // If the token is valid, we are fetching the user from the database and attaching
