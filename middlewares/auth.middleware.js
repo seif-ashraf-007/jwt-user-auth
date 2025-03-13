@@ -49,7 +49,7 @@ const authorizeAdmin = (...allowedRoles) => {
       if (!user || !allowedRoles.includes(userRole)) {
         return res.status(403).json({
           success: false,
-          message: "Forbidden",
+          message: `Access denied. Requires role: ${allowedRoles.join(", ")}`,
         });
       }
 
