@@ -1,0 +1,19 @@
+{
+  "name": "user-auth-project",
+  "version": "1.0.0",
+  "description": "simple auth project by Seif Ashraf",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seif-ashraf-007/jwt-user-auth.git"
+  },
+  "author": "Seif Ashraf",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/seif-ashraf-007/jwt-user-auth/issues"
+  },
+  "homepage": "https://github.com/seif-ashraf-007/jwt-user-auth#readme"
+}
