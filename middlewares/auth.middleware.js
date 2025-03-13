@@ -41,6 +41,28 @@ const authorize = async (req, res, next) => {
   }
 };
 
+const authorizeAdmin = (...allowedRoles) => {
+  return (res, res, next) => {
+    try {
+      const user = req.user;
+      const userRole = user.role;
+      if (!user || !allowedRoles.includes(userRole)) {
+        return res.status(403).json({
+          success: false,
+          message: "Forbidden",
+        });
+      }
+
+      next();
+    } catch (error) {
+      res.status(401).json({
+        success: false,
+        message: "Unauthorized",
+      });
+    }
+  };
+};
+
 export default authorize;
 
 // In this middleware, we are verifying the token sent in the Authorization header.
