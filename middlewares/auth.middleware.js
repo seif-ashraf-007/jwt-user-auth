@@ -40,3 +40,10 @@ const authorize = async (req, res, next) => {
     });
   }
 };
+
+export default authorize;
+
+// In this middleware, we are verifying the token sent in the Authorization header.
+// If the token is valid, we are fetching the user from the database and attaching
+// it to the request object. This way, we can access the user details in the protected routes.
+// If the token is invalid, we are sending a 401 Unauthorized response.
