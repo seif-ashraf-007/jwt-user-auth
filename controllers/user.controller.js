@@ -15,8 +15,22 @@ export const getAllUsers = async (req, res, next) => {
   }
 };
 
-export const getUserById = async (req, res) => {
-  res.send("GET User by ID route");
+export const getUserById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findById(id).select("-password");
+
+    if (!user) {
+      throw new Error(`User not found with id of ${id}`, 404);
+    }
+
+    res.status(200).json({
+      success: true,
+      data: user,
+    });
+  } catch (error) {
+    next(error);
+  }
 };
 
 export const createUser = async (req, res) => {
