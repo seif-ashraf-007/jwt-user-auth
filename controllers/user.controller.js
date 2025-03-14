@@ -109,6 +109,22 @@ export const updateUserById = async (req, res, next) => {
   }
 };
 
-export const deleteUserById = async (req, res) => {
-  res.send("DELETE User by ID route");
+export const deleteUserById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findById(id);
+
+    if (!user) {
+      throw new Error(`User not found with id of ${id}`, 404);
+    }
+
+    await User.findByIdAndDelete(id);
+
+    res.status(200).json({
+      success: true,
+      message: `User with id of ${id} deleted successfully`,
+    });
+  } catch (error) {
+    next(error);
+  }
 };
