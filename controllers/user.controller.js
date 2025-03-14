@@ -73,8 +73,40 @@ export const createUser = async (req, res, next) => {
   }
 };
 
-export const updateUserById = async (req, res) => {
-  res.send("PUT User by ID route");
+export const updateUserById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { name, email, role } = req.body;
+
+    const user = await User.findById(id);
+
+    if (!user) {
+      throw new Error(`User not found with id of ${id}`, 404);
+    }
+
+    const existingEmail = await User.findOne({ email: email });
+
+    if (existingEmail && existingEmail._id.toString() === id) {
+      throw new Error("Email already in use", 400);
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(
+      id,
+      {
+        name,
+        email,
+        role,
+      },
+      { timestamps: true, new: true }
+    );
+
+    res.status(200).json({
+      success: true,
+      data: updatedUser,
+    });
+  } catch (error) {
+    next(error);
+  }
 };
 
 export const deleteUserById = async (req, res) => {
