@@ -34,10 +34,10 @@ Make sure you have the following installed on your system:
    npm install
    ```
 3. Configure environment variables:
-   Create a `.env` file in the root directory and add the following variables:
+   Create a `.env.<development/production>.local` file in /env/ directory and add the following variables:
    ```env
    PORT=5000
-   NODE_ENV=development
+   NODE_ENV=<development/production>
    MONGO_URI=your_mongodb_connection_string
    JWT_SECRET=your_secret_key
    JWT_EXPIRES_IN=1d
