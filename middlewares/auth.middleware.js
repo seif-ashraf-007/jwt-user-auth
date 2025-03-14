@@ -55,7 +55,9 @@ export const authorizeAdmin = (...allowedRoles) => {
       if (!user || !allowedRoles.includes(userRole)) {
         return res.status(403).json({
           success: false,
-          message: `Access denied. Requires role: ${allowedRoles.join(", ")}`,
+          message: `Access denied. Requires role: ${allowedRoles.join(
+            ", "
+          )} - Your role: ${userRole}`,
         });
       }
 
