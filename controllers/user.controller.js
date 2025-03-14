@@ -33,8 +33,44 @@ export const getUserById = async (req, res, next) => {
   }
 };
 
-export const createUser = async (req, res) => {
-  res.send("POST User route");
+export const createUser = async (req, res, next) => {
+  try {
+    const { name, email, password, role } = req.body;
+
+    if (!name || !email || !password || !role) {
+      throw new Error("Please provide all required fields", 400);
+    }
+
+    const existingUser = await User.findOne({ email: email });
+
+    if (existingUser) {
+      throw new Error("User already exists", 400);
+    }
+
+    const newUsers = await User.create([
+      {
+        name,
+        email,
+        password,
+        role,
+      },
+    ]);
+
+    const token = jwt.sign({ userId: newUsers[0]._id }, JWT_SECRET, {
+      expiresIn: JWT_EXPIRES_IN,
+    });
+
+    res.status(201).json({
+      success: true,
+      message: "User created successfully",
+      data: {
+        token,
+        user: newUsers[0],
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
 };
 
 export const updateUserById = async (req, res) => {
