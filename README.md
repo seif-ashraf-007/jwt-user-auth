@@ -26,8 +26,8 @@ Make sure you have the following installed on your system:
 ### Setup
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-repo.git
-   cd your-repo
+   git clone [https://github.com/your-repo.git](https://github.com/seif-ashraf-007/jwt-user-auth)
+   cd jwt-user-auth
    ```
 2. Install dependencies:
    ```bash
